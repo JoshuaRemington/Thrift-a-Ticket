@@ -15,7 +15,7 @@ Data Persistence: User information and bookmarked tickets are stored in a MySQL 
 Clone the repository:
 bash
 Copy code
-git clone https://github.com/your-username/ticket-finder.git <br />
+git clone https://github.com/JoshuaRemington/Thrift-a-Ticket.git <br />
 Set up the backend:
 Navigate to the backend directory and run the Spring Boot application.
 Configure the MySQL database connection in the application properties file. <br />
