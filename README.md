@@ -27,4 +27,5 @@ Access the Ticket Finder web application through your browser.
 Enter your event search criteria and explore available tickets.
 Bookmark your favorite events for quick access.
 
-[SRS](https://github.com/JoshuaRemington/Thrift-a-Ticket/files/15144533/Joshua_Remington_Resume.pdf)
+
+[SRS](https://github.com/JoshuaRemington/Thrift-a-Ticket/files/15144539/CS.370.SRS.docx.pdf)
