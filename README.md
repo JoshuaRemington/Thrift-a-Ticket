@@ -1,11 +1,11 @@
-# Thrift-a-Ticket(WIP)
+# Thrift-a-Ticket
 Thrift-a-Ticket is a web application that allows users to search for event tickets and bookmark their favorite tickets. It integrates with the Ticketmaster API to provide real-time ticket data, enhancing the user experience.
 
 ## Technologies Used
 Frontend: React <br />
 Backend: Spring Boot (Java) <br />
 Database: MySQL <br />
-API Integration: Ticketmaster API <br />
+API Integration: Ticketmaster Discovery API <br />
 ## Features
 User-friendly Interface: The React frontend provides an intuitive interface for users to input their event search criteria. <br />
 Real-time Ticket Data: Integration with the Ticketmaster API ensures that users get up-to-date information on event ticket availability and prices. <br />
@@ -28,4 +28,5 @@ Enter your event search criteria and explore available tickets.
 Bookmark your favorite events for quick access.
 
 
-[SRS](https://github.com/JoshuaRemington/Thrift-a-Ticket/files/15144539/CS.370.SRS.docx.pdf)
+[Thrift-a-Ticket_SRS.pdf](https://github.com/JoshuaRemington/Thrift-a-Ticket/files/15379913/Thrift-a-Ticket_SRS.pdf)
+
