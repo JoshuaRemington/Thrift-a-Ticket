@@ -1,9 +1,16 @@
 package com.example.java_backend.backend;
 
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import com.example.java_backend.backend.UserTicketsRepository;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 @Service
 public class UserTicketsService {
@@ -22,6 +29,11 @@ public class UserTicketsService {
         throw new RuntimeException("Error occurred while saving user", e);
     }
   }
+
+  public List<UserTickets> callAPIService(String user_event_name, String user_state_initials) {
+        List<UserTickets> list = (List<UserTickets>) ticketAPIMain.callAPI(user_event_name, user_state_initials);
+        return list;
+    }
 
   public Iterable<UserTickets> findAll() {
     return userTicketsRepository.findAll();

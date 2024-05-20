@@ -1,5 +1,10 @@
 package com.example.java_backend.backend;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.java_backend.backend.User;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 @RestController // This means that this class is a Controller
 public class BackendController {
@@ -20,43 +26,65 @@ public class BackendController {
   private final UserService userService;
 
   @Autowired
-  private final UserConcertsService userConcertsService;
-
-  @Autowired
   private final UserTicketsService userTicketsService;
 
   @Autowired
-  public BackendController(UserService userService, UserConcertsService userConcertsService, UserTicketsService userTicketsService) {
+  private final ticketAPIMain api;
+
+  @Autowired
+  public BackendController(UserService userService, UserTicketsService userTicketsService, ticketAPIMain api) {
     this.userService = userService;
-    this.userConcertsService = userConcertsService;
     this.userTicketsService = userTicketsService;
+    this.api = api;
   }
 
   @PostMapping(path="/addUser")
-  public @ResponseBody String addNewUser (@RequestBody User u) {
-    User n = new User(u.getEmail(), u.getPassword());
-    userService.saveUser(n);
-    return "Saved";
+  public @ResponseBody int addNewUser(@RequestBody User u) {
+      String encryptedPassword = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
+      User n = new User(u.getEmail(), encryptedPassword);
+      try {
+          User savedUser = userService.saveUser(n);
+          if (savedUser == null) {
+              // User already exists
+              return 0;
+          } else {
+              // User saved successfully
+              return 2;
+          }
+      } catch (Exception e) {
+          // Error occurred while saving user
+          System.err.println("Error occurred while adding user: " + e.getMessage());
+          e.printStackTrace();
+          return 1;
+      }
   }
 
-  @PostMapping(path="/addUserConcert") // Map ONLY POST Requests
-  public @ResponseBody String addNewUserConcert(@RequestBody UserConcerts request) {
-      // @ResponseBody means the returned String is the response, not a view name
-      // @RequestBody binds the JSON data to the UserConcertRequest object
-      UserConcerts n = new UserConcerts(request.getEmail(), request.getArtist(), request.getVenue(),
-              request.getDate(), request.getTime(), request.getCityState());
-      userConcertsService.saveUserConcert(n);
-      return "Saved";
+  @PostMapping(path="/login")
+  public @ResponseBody boolean login (@RequestBody User u) {
+    String encryptedPassword = BCrypt.hashpw(u.getPassword(), BCrypt.gensalt());
+    User n = new User(u.getEmail(), encryptedPassword);
+    return userService.inDatabase(n);
   }
-  
+
   @PostMapping(path="/addUserTicket") // Map ONLY POST Requests
   public @ResponseBody String addNewUserTicket(@RequestBody UserTickets request) {
       // @ResponseBody means the returned String is the response, not a view name
       // @RequestBody binds the JSON data to the UserTicketRequest object
       UserTickets n = new UserTickets(request.getEmail(), request.getArtist(), request.getVenue(),
-              request.getDate(), request.getTime(), request.getCityState(), request.getSeatNumber(), request.getPrice());
+              request.getDate(), request.getTime(), request.getPrice(), request.getPurchase_link(), request.getImg_url());
       userTicketsService.saveUserConcert(n);
       return "Saved";
+  }
+  
+  @GetMapping(path="/searchTickets/{event}/{state_letters}")
+  public @ResponseBody Iterable<UserTickets> apiSearch(@PathVariable String event, @PathVariable String state_letters) {
+    return userTicketsService.callAPIService(event, state_letters);
+  }
+
+  @GetMapping(path="/searchTickets")
+  public @ResponseBody Iterable<User> searchTickets() {
+    // This returns a JSON or XML with the users
+    return userService.findAll();
   }
 
   @GetMapping(path="/all")
@@ -71,16 +99,11 @@ public class BackendController {
     return userTicketsService.findAll();
   }
 
-  @GetMapping(path="/allUserConcerts")
-  public @ResponseBody Iterable<UserConcerts> getAllUserConcerts() {
-    // This returns a JSON or XML with the user concerts
-    return userConcertsService.findAll();
-  }
-
   @GetMapping("/userTickets/{email}")
     public @ResponseBody Iterable<UserTickets> getUserTickets(@PathVariable String email) {
     // This returns a JSON or XML with the user concerts
     return userTicketsService.findAllByEmail(email);
   }
+
 }
 
