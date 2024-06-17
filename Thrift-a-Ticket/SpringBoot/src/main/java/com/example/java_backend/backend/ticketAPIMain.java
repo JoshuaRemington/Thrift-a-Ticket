@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// For SeatGeek API:
-// Your app secret is
-// fab7dbffd504ffa3c4b334e9fc0c24b0957ebec644fb21557f73f2b7e9c05c43 - copy now
-// as it cannot be retrieved later.
 @Service
 public class ticketAPIMain {
 	private static final HttpResponse<String> NULL = null;
@@ -42,14 +38,14 @@ public class ticketAPIMain {
 			// concatenate user input with get command URL
 			String get_req_url = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + user_event_name
 					+ "&countryCode=US&stateCode="
-					+ user_state_initials + "&apikey=kp12R01fgG1JtbhuJmKX9tzmho9pYjDy";
+					+ user_state_initials + ***APIKEY****;
 
 			// Sending HTTP GET request to get the top 20 chart rankings from the online
 			// movie database
 			HttpResponse<String> response = NULL;
 			try {
 				response = Unirest.get(get_req_url)
-						.header("X-RapidAPI-Key", "b6f3fb89aemsh3d591bae31cc233p190d09jsnc75897a96de4")
+						.header("X-RapidAPI-Key", ***APIKEY***)
 						.header("X-RapidAPI-Host", "seatgeek-seatgeekcom.p.rapidapi.com")
 						.asString();
 			} catch (UnirestException e) {
