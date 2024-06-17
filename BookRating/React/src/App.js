@@ -151,7 +151,7 @@ function App() {
 
     const getBookmark = async () => {
         try {
-            const response = await fetch('http://localhost:8080/userTickets/' + email, {
+            const response = await fetch('http://localhost:8080/UserBooks/' + email, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

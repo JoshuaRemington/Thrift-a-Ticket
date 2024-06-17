@@ -26,13 +26,13 @@ public class BackendController {
   private final UserService userService;
 
   @Autowired
-  private final UserTicketsService userTicketsService;
+  private final UserBooksService userTicketsService;
 
   @Autowired
-  private final ticketAPIMain api;
+  private final BookAPI api;
 
   @Autowired
-  public BackendController(UserService userService, UserTicketsService userTicketsService, ticketAPIMain api) {
+  public BackendController(UserService userService, UserBooksService userTicketsService, BookAPI api) {
     this.userService = userService;
     this.userTicketsService = userTicketsService;
     this.api = api;
@@ -67,17 +67,17 @@ public class BackendController {
   }
 
   @PostMapping(path="/addUserTicket") // Map ONLY POST Requests
-  public @ResponseBody String addNewUserTicket(@RequestBody UserTickets request) {
+  public @ResponseBody String addNewUserTicket(@RequestBody UserBooks request) {
       // @ResponseBody means the returned String is the response, not a view name
       // @RequestBody binds the JSON data to the UserTicketRequest object
-      UserTickets n = new UserTickets(request.getEmail(), request.getArtist(), request.getVenue(),
+      UserBooks n = new UserBooks(request.getEmail(), request.getArtist(), request.getVenue(),
               request.getDate(), request.getTime(), request.getPrice(), request.getPurchase_link(), request.getImg_url());
       userTicketsService.saveUserConcert(n);
       return "Saved";
   }
   
   @GetMapping(path="/searchTickets/{event}/{state_letters}")
-  public @ResponseBody Iterable<UserTickets> apiSearch(@PathVariable String event, @PathVariable String state_letters) {
+  public @ResponseBody Iterable<UserBooks> apiSearch(@PathVariable String event, @PathVariable String state_letters) {
     return userTicketsService.callAPIService(event, state_letters);
   }
 
@@ -94,13 +94,13 @@ public class BackendController {
   }
 
   @GetMapping(path="/allUserTickets")
-  public @ResponseBody Iterable<UserTickets> getAllUserTickets() {
+  public @ResponseBody Iterable<UserBooks> getAllUserTickets() {
     // This returns a JSON or XML with the user tickets
     return userTicketsService.findAll();
   }
 
-  @GetMapping("/userTickets/{email}")
-    public @ResponseBody Iterable<UserTickets> getUserTickets(@PathVariable String email) {
+  @GetMapping("/UserBooks/{email}")
+    public @ResponseBody Iterable<UserBooks> getUserTickets(@PathVariable String email) {
     // This returns a JSON or XML with the user concerts
     return userTicketsService.findAllByEmail(email);
   }

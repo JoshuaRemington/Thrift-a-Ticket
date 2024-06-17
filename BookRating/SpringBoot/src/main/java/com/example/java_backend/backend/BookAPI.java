@@ -25,10 +25,10 @@ import java.util.Scanner;
 // fab7dbffd504ffa3c4b334e9fc0c24b0957ebec644fb21557f73f2b7e9c05c43 - copy now
 // as it cannot be retrieved later.
 @Service
-public class ticketAPIMain {
+public class BookAPI {
 	private static final HttpResponse<String> NULL = null;
 
-	public static Iterable<UserTickets> callAPI(String user_event_name, String user_state_initials) {
+	public static Iterable<UserBooks> callAPI(String user_event_name, String user_state_initials) {
 		Scanner kb = new Scanner(System.in);
 		{
 			// get event name and state initials from user
@@ -60,7 +60,7 @@ public class ticketAPIMain {
 			// Getting the response body
 			String responseString = response.getBody();
 			//System.out.println("response: " + responseString);
-			List<UserTickets> ticketArray = new ArrayList<>();
+			List<UserBooks> ticketArray = new ArrayList<>();
 
 			int substringIndex = 0;
 			String toDisplay = responseString.substring(substringIndex);
@@ -188,7 +188,7 @@ public class ticketAPIMain {
 					toDisplay = toDisplay.substring(status_loc);
 					substringIndex = status_loc + quote_loc;
 					// System.out.println("EVENT'S CURRENT STATUS: " + status_string);
-					UserTickets temp = new UserTickets(null, event_name_string, event_name_string, event_date_string,
+					UserBooks temp = new UserBooks(null, event_name_string, event_name_string, event_date_string,
 							event_time_string, min_price_string, url_string, img_string);
 					ticketArray.add(temp);
 					//System.out.println(substringIndex);
