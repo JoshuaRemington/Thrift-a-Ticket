@@ -8,10 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Entity(name = "UserBooks")
-@Table(name = "UserBooks")
+@Entity(name = "usertickets")
+@Table(name = "usertickets")
 @Data
-public class UserBooks {
+public class UserTickets {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -40,7 +40,7 @@ public class UserBooks {
   @Column(nullable=false)
   private String img_url;
 
-  public UserBooks(){
+  public UserTickets(){
     this.email = "NULL";
     this.artist = "NULL";
     this.venue = "NULL";
@@ -51,7 +51,7 @@ public class UserBooks {
     this.img_url = "NULL";
   }
 
-  public UserBooks(String email, String artist, String venue, String date, String time, String price, String purchase_link, String img_url)
+  public UserTickets(String email, String artist, String venue, String date, String time, String price, String purchase_link, String img_url)
   {
     this.email = email;
     this.artist = artist;

@@ -5,9 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.java_backend.backend.UserBooks;
+import com.example.java_backend.backend.UserTickets;
 
 @Repository
-public interface UserBooksRepository extends CrudRepository<UserBooks, Long> {
-  Iterable<UserBooks> findByEmail(String email);
+public interface UserTicketsRepository extends CrudRepository<UserTickets, Long> {
+  Iterable<UserTickets> findByEmail(String email);
 }

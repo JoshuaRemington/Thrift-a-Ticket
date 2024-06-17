@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
-public class BookAPI {
+public class ticketAPIMain {
 	private static final HttpResponse<String> NULL = null;
 
-	public static Iterable<UserBooks> callAPI(String user_event_name, String user_state_initials) {
+	public static Iterable<UserTickets> callAPI(String user_event_name, String user_state_initials) {
 		Scanner kb = new Scanner(System.in);
 		{
 			// get event name and state initials from user
@@ -56,7 +56,7 @@ public class BookAPI {
 			// Getting the response body
 			String responseString = response.getBody();
 			//System.out.println("response: " + responseString);
-			List<UserBooks> ticketArray = new ArrayList<>();
+			List<UserTickets> ticketArray = new ArrayList<>();
 
 			int substringIndex = 0;
 			String toDisplay = responseString.substring(substringIndex);
@@ -184,7 +184,7 @@ public class BookAPI {
 					toDisplay = toDisplay.substring(status_loc);
 					substringIndex = status_loc + quote_loc;
 					// System.out.println("EVENT'S CURRENT STATUS: " + status_string);
-					UserBooks temp = new UserBooks(null, event_name_string, event_name_string, event_date_string,
+					UserTickets temp = new UserTickets(null, event_name_string, event_name_string, event_date_string,
 							event_time_string, min_price_string, url_string, img_string);
 					ticketArray.add(temp);
 					//System.out.println(substringIndex);

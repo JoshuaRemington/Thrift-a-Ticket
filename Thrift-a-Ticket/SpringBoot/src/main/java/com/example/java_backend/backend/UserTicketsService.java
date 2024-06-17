@@ -7,20 +7,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+import com.example.java_backend.backend.UserTicketsRepository;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 @Service
-public class UserBooksService {
+public class UserTicketsService {
     
   @Autowired
-  private UserBooksRepository userTicketsRepository;
+  private UserTicketsRepository userTicketsRepository;
 
   @Transactional
-  public UserBooks saveUserConcert(UserBooks UserBooks) {
+  public UserTickets saveUserConcert(UserTickets userTickets) {
     try {
-      return userTicketsRepository.save(UserBooks);
+      return userTicketsRepository.save(userTickets);
     } catch (Exception e) {
         // Print the error message or handle the exception as needed
         System.err.println("Error occurred while saving user: " + e.getMessage());
@@ -29,16 +30,16 @@ public class UserBooksService {
     }
   }
 
-  public List<UserBooks> callAPIService(String user_event_name, String user_state_initials) {
-        List<UserBooks> list = (List<UserBooks>) BookAPI.callAPI(user_event_name, user_state_initials);
+  public List<UserTickets> callAPIService(String user_event_name, String user_state_initials) {
+        List<UserTickets> list = (List<UserTickets>) ticketAPIMain.callAPI(user_event_name, user_state_initials);
         return list;
     }
 
-  public Iterable<UserBooks> findAll() {
+  public Iterable<UserTickets> findAll() {
     return userTicketsRepository.findAll();
   }
 
-  public Iterable<UserBooks> findAllByEmail(String email) {
+  public Iterable<UserTickets> findAllByEmail(String email) {
     return userTicketsRepository.findByEmail(email);
   }
 }

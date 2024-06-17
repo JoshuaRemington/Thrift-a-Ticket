@@ -34,18 +34,18 @@ public class BackendControllerTest {
     private UserService userService;
 
     @MockBean
-    private UserBooksService userBooksService;
+    private UserTicketsService userTicketsService;
 
     @MockBean
-    private BookAPI api;
+    private ticketAPIMain api;
 
     private User user;
-    private UserBooks UserBooks;
+    private UserTickets userTickets;
 
     @BeforeEach
     void setUp() {
         user = new User("test@example.com", "password");
-        UserBooks = new UserBooks("test@example.com", "artist", "venue", "date", "time", "price", "link", "img");
+        userTickets = new UserTickets("test@example.com", "artist", "venue", "date", "time", "price", "link", "img");
     }
 
     @Test
@@ -74,18 +74,18 @@ public class BackendControllerTest {
     public void testAddNewUserTicket() throws Exception {
         mockMvc.perform(post("/addUserTicket")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(UserBooks)))
+                .content(new ObjectMapper().writeValueAsString(userTickets)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Saved"));
     }
 
     @Test
     public void testApiSearch() throws Exception {
-        when(userBooksService.callAPIService(anyString(), anyString())).thenReturn(Collections.singletonList(UserBooks));
+        when(userTicketsService.callAPIService(anyString(), anyString())).thenReturn(Collections.singletonList(userTickets));
 
         mockMvc.perform(get("/searchTickets/event/state"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(UserBooks))));
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(userTickets))));
     }
 
     @Test
@@ -99,19 +99,19 @@ public class BackendControllerTest {
 
     @Test
     public void testGetAllUserTickets() throws Exception {
-        when(userBooksService.findAll()).thenReturn(Collections.singletonList(UserBooks));
+        when(userTicketsService.findAll()).thenReturn(Collections.singletonList(userTickets));
 
         mockMvc.perform(get("/allUserTickets"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(UserBooks))));
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(userTickets))));
     }
 
     @Test
     public void testGetUserTickets() throws Exception {
-        when(userBooksService.findAllByEmail(anyString())).thenReturn(Collections.singletonList(UserBooks));
+        when(userTicketsService.findAllByEmail(anyString())).thenReturn(Collections.singletonList(userTickets));
 
-        mockMvc.perform(get("/UserBooks/test@example.com"))
+        mockMvc.perform(get("/userTickets/test@example.com"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(UserBooks))));
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(Collections.singletonList(userTickets))));
     }
 }
